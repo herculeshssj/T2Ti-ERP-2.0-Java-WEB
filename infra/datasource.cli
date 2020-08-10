@@ -1,0 +1,11 @@
+connect 127.0.0.1
+ 
+batch
+ 
+module add --name=org.postgresql --resources=postgresql-42.2.14.jar --dependencies=javax.api,javax.transaction.api
+  
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql)
+ 
+data-source add --jndi-name=java:/t2tierpds --name=t2tiPool --connection-url=jdbc:postgresql://localhost:5432/t2tierp --driver-name=postgresql --user-name=t2tierp --password=t2t1Erp*
+ 
+run-batch
