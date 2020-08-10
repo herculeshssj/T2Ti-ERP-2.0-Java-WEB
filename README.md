@@ -44,7 +44,7 @@ docker volume create t2tierp-psql-data
 docker run --restart=unless-stopped --name t2tierp-postgresql -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v t2tierp-psql-data:/var/lib/postgresql/data -d postgres:11
 ```
 
-Use o arquivo __initialScript.sql__ que está na pasta infra/Scripts para criar o usuário e a base de dados.
+Use o arquivo __initialScript.sql__ que está na pasta infra/t2tierp/Scripts para criar o usuário e a base de dados.
 
 Após criado a base de dados, restaure o backup que está na pasta infra:
 
@@ -56,4 +56,20 @@ Após restaurar o backup, altere a senha do usuário admin para '123456':
 
 ```
 docker exec -i t2tierp-postgresql psql -U t2tierp -d t2tierp -c "update usuario set senha = 'e10adc3949ba59abbe56e057f20f883e' where id = 1"
+```
+
+### Eclipse
+
+Defina o encoding do workspace para ISO-8859-1.
+
+Instale o JBoss Tools no Eclipse pelo Eclipse Marketplace. Deixe marcado somente a opção "JBoss AS, WildFly & EAP Server Tools" na janela de seleção de componentes.
+
+Após a instalação do JBoss Tools, defina o Wildfly 11 como o servidor principal na view Server, deixando as opções padrão marcadas.
+
+### JBoss
+
+Inicie o Wildfly 11. Entre na pasta bin do Wildfly 11 e execute o script __datasource.cli__. O script está na pasta infra.
+
+```
+./jboss-cli.sh --file=datasource.cli 
 ```
