@@ -10,6 +10,10 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+		<flyway.driver>org.postgresql.Driver</flyway.driver>
+		<flyway.url>jdbc:postgresql://localhost:5432/t2tierp</flyway.url>
+		<flyway.user>t2tierp</flyway.user>
+		<flyway.password>t2t1Erp*</flyway.password>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -27,8 +31,30 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>3.2.4.RELEASE</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>6.5.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.14</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>t2tierp</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>6.5.3</version>
+				<configuration>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

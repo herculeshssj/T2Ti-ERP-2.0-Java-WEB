@@ -49,14 +49,26 @@ Use o arquivo __initialScript.sql__ que está na pasta infra/t2tierp/Scripts para
 Após criado a base de dados, restaure o backup que está na pasta infra:
 
 ```
-docker exec -i t2tierp-postgresql psq -U t2tierp < script_bd_infra_controle_acesso.backup
+docker exec -i t2tierp-postgresql psql -U t2tierp < script_bd_infra_controle_acesso.backup
 ```
 
-Após restaurar o backup, altere a senha do usuário admin para '123456':
+Após restaurar o backup, altere a senha do usuário admin ('1') para '123456':
 
 ```
-docker exec -i t2tierp-postgresql psql -U t2tierp -d t2tierp -c "update usuario set senha = 'e10adc3949ba59abbe56e057f20f883e' where id = 1"
+docker exec -i t2tierp-postgresql psql -U t2tierp -d t2tierp -c "update usuario set senha = 'eeafb716f93fa090d7716749a6eefa72' where id = 1"
 ```
+
+Logo em seguida, execute a atualização da estrutura da base usando o Flyway configurado no projeto infra:
+
+```
+docker run --rm -it --name t2tierp-flyway --net=host -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3-openjdk-11 mvn flyway:baseline
+```
+
+```
+docker run --rm -it --name t2tierp-flyway --net=host -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3-openjdk-11 mvn flyway:migrate
+```
+
+**Obs:** faça os ajustes necessários no pom.xml referente a conexão com a base.
 
 ### Eclipse
 
@@ -65,6 +77,12 @@ Defina o encoding do workspace para ISO-8859-1.
 Instale o JBoss Tools no Eclipse pelo Eclipse Marketplace. Deixe marcado somente a opção "JBoss AS, WildFly & EAP Server Tools" na janela de seleção de componentes.
 
 Após a instalação do JBoss Tools, defina o Wildfly 11 como o servidor principal na view Server, deixando as opções padrão marcadas.
+
+Importe os projetos que serão trabalhados pela perspectiva Git.
+
+Não esqueça de realizar um build no projeto através do Maven -> Update projects e de realizar o mvn install através do Run As -> Maven install.
+
+Para rodar qualquer um dos projetos, clique direito -> Run As -> Run On Server.
 
 ### JBoss
 
