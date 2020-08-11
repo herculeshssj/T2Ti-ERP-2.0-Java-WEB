@@ -91,3 +91,42 @@ Inicie o Wildfly 11. Entre na pasta bin do Wildfly 11 e execute o script __datas
 ```
 ./jboss-cli.sh --file=datasource.cli 
 ```
+
+## Realizando o deploy
+
+Cada projeto produz seu próprio arquivo .war, que pode ser adicionado na mesma instância ou em outras instâncias de Wildfly.
+
+Para gerar o arquivo .war, clique direito no projeto -> Run As -> Maven Install...
+
+O arquivo .war estará na pasta target/.
+
+Crie uma pasta chamada deployments no diretório home.
+
+Pare qualquer instância do Wildfly que está atualmente em execução.
+
+Suba o container do Wildfly 11:
+
+```
+docker run --name t2tierp-wildfly --net=host -v "$(pwd)"/deployments:/opt/jboss/wildfly/standalone/deployments -d jboss/wildfly:11.0.0.Final
+```
+
+Copie o arquivo datasource.cli e o driver JDBC para dentro do container:
+
+```
+docker cp datasource.cli t2tierp-wildfly:/opt/jboss
+docker cp postgresql-42.2.14.jar t2tierp-wildfly:/opt/jboss
+```
+
+Entre dentro do container:
+
+```
+docker exec -it t2tierp-wildfly bash
+```
+
+Execute o script:
+
+```
+./wildfly/bin/jboss-cli.sh --file=datasource.cli
+```
+
+Saia do container e copie o arquivo WAR para a pasta deployments e aguarde finalizar o deploy.
