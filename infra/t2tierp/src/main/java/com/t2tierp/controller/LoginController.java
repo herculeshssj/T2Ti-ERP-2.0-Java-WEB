@@ -31,7 +31,7 @@ public class LoginController implements AuthenticationProvider {
 
 		try {
 			InitialContext initialContext = new InitialContext();
-			dao = (UsuarioDAO) initialContext.lookup("java:comp/ejb/usuarioDAO");
+			dao = (UsuarioDAO) initialContext.lookup("java:module/ejb/usuarioDAO");
 			Md5PasswordEncoder enc = new Md5PasswordEncoder();
 			senha = enc.encodePassword(nomeUsuario + senha, null);
 			usuario = dao.getUsuario(nomeUsuario, senha);
