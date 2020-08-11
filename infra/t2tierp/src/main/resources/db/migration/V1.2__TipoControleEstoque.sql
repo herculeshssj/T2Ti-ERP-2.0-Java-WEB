@@ -1,0 +1,1 @@
+ALTER TABLE public.empresa ADD tipo_controle_estoque varchar(50) NULL;

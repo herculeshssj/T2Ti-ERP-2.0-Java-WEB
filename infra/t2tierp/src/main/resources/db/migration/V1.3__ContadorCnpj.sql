@@ -1,0 +1,1 @@
+ALTER TABLE public.contador ADD cnpj varchar(14) NULL;

@@ -72,7 +72,7 @@ docker run --rm -it --name t2tierp-flyway --net=host -v "$(pwd)":/usr/src/mymave
 
 ### Eclipse
 
-Defina o encoding do workspace para ISO-8859-1.
+Nas preferências do Eclipse, defina o encoding do workspace para ISO-8859-1, e desmarque a opção Build em Validation -> Validator -> JPA Validator.
 
 Instale o JBoss Tools no Eclipse pelo Eclipse Marketplace. Deixe marcado somente a opção "JBoss AS, WildFly & EAP Server Tools" na janela de seleção de componentes.
 
