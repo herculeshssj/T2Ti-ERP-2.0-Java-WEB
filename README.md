@@ -3,28 +3,18 @@ Projeto T2Ti ERP 2.0
 
 ![](http://t2ti.com/images/erp/logo_erp_2.png)
 
-Aqui È possÌvel baixar o cÛdigo fonte do Projeto T2Ti ERP 2.0 em Java WEB. Este treinamento formou milhares de desenvolvedores no Brasil e ajudou centenas deles a lanÁar seu prÛprio ERP no mercado. Mais informaÁıes sobre o treinamento podem ser encontradas no seguinte link: http://t2ti.com/erp2/.
+Aqui √© poss√≠vel baixar o c√≥digo fonte do Projeto T2Ti ERP 2.0 em Java WEB. Este treinamento formou milhares de desenvolvedores no Brasil e ajudou centenas deles a lan√ßar seu pr√≥prio ERP no mercado. Mais informa√ß√µes sobre o treinamento podem ser encontradas no seguinte link: http://t2ti.com/erp2/.
 
 
 ## T2Ti ERP 2.0 - Escopo
 
 ![](http://t2ti.com/images/erp/t2ti_erp_2.jpg)
 
-### Bloco Administrativo
-
-**O Bloco Administrativo È formado por cinco mÛdulos:**
-
-- **Cadastros Base:** engloba os cadastros que s„o usados por diversos mÛdulos do ERP.
-- **[GED - Gest„o EletrÙnica de Documentos](http://t2ti.com/erp2/artigos/GED.pdf)**
-- **[Gerador de Etiquetas](http://t2ti.com/erp2/artigos/GeradorEtiquetas.pdf)**
-- **[Agenda Corporativa](http://t2ti.com/erp2/artigos/AgendaCorporativa.pdf)**
-- **[BI - Business Intelligence](http://t2ti.com/erp2/artigos/BI.pdf)**
-
 ## Forma de Desenvolvimento Java Web
 
 ![](http://t2ti.com/images/erp/jsf-arch.jpg)
 
-O ERP Java Web È feito com JSF como tecnologia base e frameworks auxiliares que s„o apresentados aos Participantes durante o treinamento. Como uma aplicaÁ„o Web, tudo o que o usu·rio vai precisar È de um browser para usar o ERP.
+O ERP Java Web √© feito com JSF como tecnologia base e frameworks auxiliares que s√£o apresentados aos Participantes durante o treinamento. Como uma aplica√ß√£o Web, tudo o que o usu√°rio vai precisar √© de um browser para usar o ERP.
 
 ## Ambiente de desenvolvimento
 
@@ -35,7 +25,7 @@ O ERP Java Web È feito com JSF como tecnologia base e frameworks auxiliares que 
 - PostgreSQL 11
 - Docker
 
-## ConfiguraÁ„o do ambiente
+## Configura√ß√£o do ambiente
 
 ### PostgreSQL
 
@@ -44,21 +34,21 @@ docker volume create t2tierp-psql-data
 docker run --restart=unless-stopped --name t2tierp-postgresql -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v t2tierp-psql-data:/var/lib/postgresql/data -d postgres:11
 ```
 
-Use o arquivo __initialScript.sql__ que est· na pasta infra/t2tierp/Scripts para criar o usu·rio e a base de dados.
+Use o arquivo __initialScript.sql__ que est√° na pasta infra/t2tierp/Scripts para criar o usu√°rio e a base de dados.
 
-ApÛs criado a base de dados, restaure o backup que est· na pasta infra:
+Ap√≥s criado a base de dados, restaure o backup que est√° na pasta infra:
 
 ```
 docker exec -i t2tierp-postgresql psql -U t2tierp < script_bd_infra_controle_acesso.backup
 ```
 
-ApÛs restaurar o backup, altere a senha do usu·rio admin ('1') para '123456':
+Ap√≥s restaurar o backup, altere a senha do usu√°rio admin ('1') para '123456':
 
 ```
 docker exec -i t2tierp-postgresql psql -U t2tierp -d t2tierp -c "update usuario set senha = 'eeafb716f93fa090d7716749a6eefa72' where id = 1"
 ```
 
-Logo em seguida, execute a atualizaÁ„o da estrutura da base usando o Flyway configurado no projeto infra:
+Logo em seguida, execute a atualiza√ß√£o da estrutura da base usando o Flyway configurado no projeto infra:
 
 ```
 docker run --rm -it --name t2tierp-flyway --net=host -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3-openjdk-11 mvn flyway:baseline
@@ -68,25 +58,25 @@ docker run --rm -it --name t2tierp-flyway --net=host -v "$(pwd)":/usr/src/mymave
 docker run --rm -it --name t2tierp-flyway --net=host -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3-openjdk-11 mvn flyway:migrate
 ```
 
-**Obs:** faÁa os ajustes necess·rios no pom.xml referente a conex„o com a base.
+**Obs:** fa√ßa os ajustes necess√°rios no pom.xml referente a conex√£o com a base.
 
 ### Eclipse
 
-Nas preferÍncias do Eclipse, defina o encoding do workspace para ISO-8859-1, e desmarque a opÁ„o Build em Validation -> Validator -> JPA Validator.
+Nas prefer√™ncias do Eclipse, defina o encoding do workspace para ISO-8859-1, e desmarque a op√ß√£o Build em Validation -> Validator -> JPA Validator.
 
-Instale o JBoss Tools no Eclipse pelo Eclipse Marketplace. Deixe marcado somente a opÁ„o "JBoss AS, WildFly & EAP Server Tools" na janela de seleÁ„o de componentes.
+Instale o JBoss Tools no Eclipse pelo Eclipse Marketplace. Deixe marcado somente a op√ß√£o "JBoss AS, WildFly & EAP Server Tools" na janela de sele√ß√£o de componentes.
 
-ApÛs a instalaÁ„o do JBoss Tools, defina o Wildfly 11 como o servidor principal na view Server, deixando as opÁıes padr„o marcadas.
+Ap√≥s a instala√ß√£o do JBoss Tools, defina o Wildfly 11 como o servidor principal na view Server, deixando as op√ß√µes padr√£o marcadas.
 
-Importe os projetos que ser„o trabalhados pela perspectiva Git.
+Importe os projetos que ser√£o trabalhados pela perspectiva Git.
 
-N„o esqueÁa de realizar um build no projeto atravÈs do Maven -> Update projects e de realizar o mvn install atravÈs do Run As -> Maven install.
+N√£o esque√ßa de realizar um build no projeto atrav√©s do Maven -> Update projects e de realizar o mvn install atrav√©s do Run As -> Maven install.
 
 Para rodar qualquer um dos projetos, clique direito -> Run As -> Run On Server.
 
 ### JBoss
 
-Inicie o Wildfly 11. Entre na pasta bin do Wildfly 11 e execute o script __datasource.cli__. O script est· na pasta infra.
+Inicie o Wildfly 11. Entre na pasta bin do Wildfly 11 e execute o script __datasource.cli__. O script est√° na pasta infra.
 
 ```
 ./jboss-cli.sh --file=datasource.cli 
@@ -94,15 +84,15 @@ Inicie o Wildfly 11. Entre na pasta bin do Wildfly 11 e execute o script __datas
 
 ## Realizando o deploy
 
-Cada projeto produz seu prÛprio arquivo .war, que pode ser adicionado na mesma inst‚ncia ou em outras inst‚ncias de Wildfly.
+Cada projeto produz seu pr√≥prio arquivo .war, que pode ser adicionado na mesma inst√¢ncia ou em outras inst√¢ncias de Wildfly.
 
 Para gerar o arquivo .war, clique direito no projeto -> Run As -> Maven Install...
 
-O arquivo .war estar· na pasta target/.
+O arquivo .war estar√° na pasta target/.
 
-Crie uma pasta chamada deployments no diretÛrio home.
+Crie uma pasta chamada deployments no diret√≥rio home.
 
-Pare qualquer inst‚ncia do Wildfly que est· atualmente em execuÁ„o.
+Pare qualquer inst√¢ncia do Wildfly que est√° atualmente em execu√ß√£o.
 
 Suba o container do Wildfly 11:
 
